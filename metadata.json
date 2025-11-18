@@ -1,0 +1,5 @@
+{
+  "name": "AI Application Dashboard",
+  "description": "A central dashboard to house multiple powerful AI-driven applications, starting with the Customer Avatar Deep Dive tool.",
+  "requestFramePermissions": []
+}
