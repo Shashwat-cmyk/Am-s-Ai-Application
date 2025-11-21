@@ -33,9 +33,18 @@ export const sendOtp = async (email: string): Promise<boolean> => {
 
     // 5. Send Email via EmailJS
     try {
+        // Calculate expiry time (15 minutes from now)
+        const expiryTime = new Date(Date.now() + 15 * 60 * 1000);
+        const timeString = expiryTime.toLocaleTimeString('en-US', {
+            hour: '2-digit',
+            minute: '2-digit',
+            hour12: true
+        });
+
         const templateParams = {
             to_email: email,
             otp: otp,
+            time: timeString,
         };
 
         console.log("Attempting to send OTP via EmailJS...");
