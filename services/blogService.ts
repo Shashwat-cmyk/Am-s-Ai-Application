@@ -19,12 +19,14 @@ export interface BlogInput {
     wordCount: number;
 }
 
-const fetchWebsiteContent = async (url: string): Promise<string> => {
-    // List of CORS proxies to try
+const fetchWebsiteContent = async (url: string): Promise<string | null> => {
+    // List of CORS proxies to try (expanded with more options)
     const proxies = [
         `https://api.allorigins.win/get?url=${encodeURIComponent(url)}`,
         `https://corsproxy.io/?${encodeURIComponent(url)}`,
         `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(url)}`,
+        `https://thingproxy.freeboard.io/fetch/${encodeURIComponent(url)}`,
+        `https://cors-anywhere.herokuapp.com/${url}`, // May require request for temp access
     ];
 
     let lastError: Error | null = null;
@@ -39,6 +41,7 @@ const fetchWebsiteContent = async (url: string): Promise<string> => {
                 headers: {
                     'Accept': 'application/json, text/html',
                 },
+                signal: AbortSignal.timeout(10000), // 10 second timeout per proxy
             });
 
             if (!response.ok) {
@@ -84,25 +87,29 @@ const fetchWebsiteContent = async (url: string): Promise<string> => {
             }
 
             // Limit to first 3000 characters to avoid token limits
-            console.log(`Successfully fetched website content (${cleanHtml.length} characters)`);
+            console.log(`✅ Successfully fetched website content (${cleanHtml.length} characters)`);
             return cleanHtml.substring(0, 3000);
 
         } catch (error) {
-            console.error(`Proxy failed: ${proxyUrl}`, error);
+            console.error(`❌ Proxy failed: ${proxyUrl}`, error);
             lastError = error instanceof Error ? error : new Error(String(error));
             // Continue to next proxy
         }
     }
 
-    // All proxies failed
-    console.error("All CORS proxies failed to fetch website content");
-    throw new Error(
-        `Unable to fetch website content. The website may be blocking automated requests or all proxy services are currently unavailable. ` +
-        `Please try again later or use a different website URL. Last error: ${lastError?.message || 'Unknown error'}`
-    );
+    // All proxies failed - return null to allow graceful fallback
+    console.warn("⚠️ All CORS proxies failed. Will generate blog without website context.");
+    return null;
 };
 
-const constructPrompt = (input: BlogInput, websiteContent: string): string => {
+const constructPrompt = (input: BlogInput, websiteContent: string | null): string => {
+    const contextSection = websiteContent
+        ? `**Client Website Context:**
+${websiteContent}
+
+**Additional Requirement:** Analyze the client's products/services from the website content above and naturally weave in mentions of their offerings where relevant. Do NOT make it sound like a sales pitch - keep the focus on providing value to the reader.`
+        : `**Note:** Client website content could not be fetched. Focus on creating high-quality, SEO-optimized content about the topic without specific client integration.`;
+
     return `You are an expert SEO content writer and digital marketing specialist.
 
 **Task:** Write a comprehensive, SEO-optimized blog post.
@@ -111,8 +118,7 @@ const constructPrompt = (input: BlogInput, websiteContent: string): string => {
 
 **Target Word Count:** ${input.wordCount} words
 
-**Client Website Context:**
-${websiteContent}
+${contextSection}
 
 **Requirements:**
 
@@ -130,13 +136,7 @@ ${websiteContent}
    - Include actionable insights and practical tips
    - Strong conclusion with a call-to-action
 
-3. **Client Integration:**
-   - Analyze the client's products/services from the website content
-   - Naturally weave in mentions of the client's offerings where relevant
-   - Do NOT make it sound like a sales pitch
-   - Keep the focus on providing value to the reader
-
-4. **Format:**
+3. **Format:**
    - Use Markdown formatting
    - Start with the meta description in a blockquote
    - Follow with the H1 title
@@ -171,8 +171,19 @@ Write the blog now.`;
 };
 
 export const generateSEOBlog = async (input: BlogInput): Promise<string> => {
-    // Fetch website content
-    const websiteContent = await fetchWebsiteContent(input.websiteUrl);
+    // Try to fetch website content, but don't fail if proxies are down
+    let websiteContent: string | null = null;
+    try {
+        websiteContent = await fetchWebsiteContent(input.websiteUrl);
+        if (websiteContent) {
+            console.log("✅ Website content fetched successfully. Will integrate with blog.");
+        } else {
+            console.warn("⚠️ Website content unavailable. Generating blog without client context.");
+        }
+    } catch (error) {
+        console.error("Error fetching website content:", error);
+        console.warn("Continuing blog generation without website context.");
+    }
 
     const prompt = constructPrompt(input, websiteContent);
 
