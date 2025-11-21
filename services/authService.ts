@@ -35,7 +35,7 @@ export const sendOtp = async (email: string): Promise<boolean> => {
     try {
         const templateParams = {
             to_email: email,
-            otp_code: otp,
+            otp: otp,
         };
 
         await emailjs.send(SERVICE_ID, TEMPLATE_ID, templateParams, PUBLIC_KEY);
