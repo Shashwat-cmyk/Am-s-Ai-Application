@@ -1,16 +1,36 @@
 
 import React from 'react';
 import { Header } from '../components/Header';
+import { HistoryPanel } from '../components/HistoryPanel';
 
 interface DashboardProps {
   onNavigateToAvatar: () => void;
   onNavigateToMasterPrompt: () => void;
+  onNavigateToProfile: () => void;
+  onNavigateToSEOBlog: () => void;
+  onLogout: () => void;
 }
 
-export const Dashboard: React.FC<DashboardProps> = ({ onNavigateToAvatar, onNavigateToMasterPrompt }) => {
+export const Dashboard: React.FC<DashboardProps> = ({ onNavigateToAvatar, onNavigateToMasterPrompt, onNavigateToProfile, onNavigateToSEOBlog, onLogout }) => {
   return (
     <>
-      <Header title="AI Application Dashboard" subtitle="A collection of powerful AI tools" />
+      <div className="flex justify-between items-center bg-gray-800 p-4 shadow-md">
+        <Header title="AI Application Dashboard" subtitle="A collection of powerful AI tools" />
+        <div className="flex gap-3">
+          <button
+            onClick={onNavigateToProfile}
+            className="bg-cyan-600 text-white font-bold py-2 px-4 rounded-md hover:bg-cyan-700 focus:outline-none focus:ring-4 focus:ring-cyan-500 focus:ring-opacity-50 transition-all text-sm"
+          >
+            Profile
+          </button>
+          <button
+            onClick={onLogout}
+            className="bg-red-600 text-white font-bold py-2 px-4 rounded-md hover:bg-red-700 focus:outline-none focus:ring-4 focus:ring-red-500 focus:ring-opacity-50 transition-all text-sm"
+          >
+            Logout
+          </button>
+        </div>
+      </div>
       <main className="container mx-auto px-4 py-8 md:py-12">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {/* App Card 1 */}
@@ -44,8 +64,25 @@ export const Dashboard: React.FC<DashboardProps> = ({ onNavigateToAvatar, onNavi
               Launch App
             </button>
           </div>
+
+          {/* SEO Blog Writer Card */}
+          <div className="bg-gray-800 rounded-lg shadow-lg p-6 flex flex-col justify-between hover:ring-2 hover:ring-purple-500 transition-all duration-300 transform hover:-translate-y-1">
+            <div>
+              <h2 className="text-xl font-bold text-purple-400 mb-2">AI-Powered SEO Blog Writer</h2>
+              <p className="text-gray-400 text-sm mb-6 h-20">
+                Generate SEO-optimized blog content tailored to your client's business and products.
+              </p>
+            </div>
+            <button
+              onClick={onNavigateToSEOBlog}
+              className="w-full bg-purple-600 text-white font-bold py-2 px-4 rounded-md hover:bg-purple-700 focus:outline-none focus:ring-4 focus:ring-purple-500 focus:ring-opacity-50 transition-all"
+            >
+              Launch App
+            </button>
+          </div>
         </div>
       </main>
+      <HistoryPanel />
     </>
   );
 };
