@@ -389,7 +389,7 @@ export const BlogSmithApp: React.FC<BlogSmithAppProps> = ({ onNavigateBack }) =>
                     <CardContent>
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-4 items-start">
                             <div className="lg:col-span-2">
-                                <Label htmlFor="topic-input" className="sr-only">Topic</Label>
+                                <Label className="sr-only">Topic</Label>
                                 <Input
                                     id="topic-input"
                                     type="text"
@@ -402,7 +402,7 @@ export const BlogSmithApp: React.FC<BlogSmithAppProps> = ({ onNavigateBack }) =>
                                 />
                             </div>
                             <div className="lg:col-span-2">
-                                <Label htmlFor="client-website-input" className="sr-only">Client Website</Label>
+                                <Label className="sr-only">Client Website</Label>
                                 <Input
                                     id="client-website-input"
                                     type="url"
@@ -653,7 +653,7 @@ export const BlogSmithApp: React.FC<BlogSmithAppProps> = ({ onNavigateBack }) =>
                     </DialogHeader>
                     <div className="space-y-4 py-4">
                         <div className="space-y-2">
-                            <Label htmlFor="wp-preset">Load Preset</Label>
+                            <Label>Load Preset</Label>
                             <Select onValueChange={handleSelectPreset}>
                                 <SelectTrigger className="bg-gray-700 border-gray-600 text-white">
                                     <SelectValue placeholder="Select a preset" />
@@ -669,7 +669,7 @@ export const BlogSmithApp: React.FC<BlogSmithAppProps> = ({ onNavigateBack }) =>
                         </div>
 
                         <div className="space-y-2">
-                            <Label htmlFor="wp-url">WordPress Site URL</Label>
+                            <Label>WordPress Site URL</Label>
                             <Input
                                 id="wp-url"
                                 placeholder="https://example.com"
@@ -679,7 +679,7 @@ export const BlogSmithApp: React.FC<BlogSmithAppProps> = ({ onNavigateBack }) =>
                             />
                         </div>
                         <div className="space-y-2">
-                            <Label htmlFor="wp-username">Username</Label>
+                            <Label>Username</Label>
                             <Input
                                 id="wp-username"
                                 placeholder="your_username"
@@ -689,7 +689,7 @@ export const BlogSmithApp: React.FC<BlogSmithAppProps> = ({ onNavigateBack }) =>
                             />
                         </div>
                         <div className="space-y-2">
-                            <Label htmlFor="wp-password">Application Password</Label>
+                            <Label>Application Password</Label>
                             <Input
                                 id="wp-password"
                                 type="password"
@@ -701,7 +701,7 @@ export const BlogSmithApp: React.FC<BlogSmithAppProps> = ({ onNavigateBack }) =>
                         </div>
 
                         <div className="border-t border-gray-700 pt-4 space-y-2">
-                            <Label htmlFor="wp-preset-name">Save as Preset</Label>
+                            <Label>Save as Preset</Label>
                             <div className="flex gap-2">
                                 <Input
                                     id="wp-preset-name"

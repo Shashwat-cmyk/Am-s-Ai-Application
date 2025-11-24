@@ -125,7 +125,7 @@ export const generateBlogPost = async (input: BlogInput): Promise<BlogPostOutput
         });
 
         if (response.text) {
-            const text = typeof response.text === 'function' ? response.text() : response.text;
+            const text = response.text;
             const parsed = JSON.parse(text) as BlogPostOutput;
 
             // Post-processing to clean up any Markdown that slipped through
@@ -177,7 +177,7 @@ export const regenerateParagraph = async (topic: string, paragraph: string): Pro
         });
 
         if (response.text) {
-            const text = typeof response.text === 'function' ? response.text() : response.text;
+            const text = response.text;
             const parsed = JSON.parse(text);
             // Clean up the regenerated paragraph too
             return { newParagraph: cleanContent(parsed.newParagraph) };

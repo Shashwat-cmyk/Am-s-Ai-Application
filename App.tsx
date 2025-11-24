@@ -6,6 +6,8 @@ import { LoginPage } from './pages/LoginPage';
 import { ProfileSetupPage } from './pages/ProfileSetupPage';
 import { ProfilePage } from './pages/ProfilePage';
 import { BlogSmithApp } from './pages/BlogSmithApp';
+import { ContentResearchApp } from './pages/ContentResearchApp';
+import { N8nTestApp } from './pages/N8nTestApp';
 
 
 import { Footer } from './components/Footer';
@@ -14,7 +16,7 @@ import { Sidebar } from './components/Sidebar';
 import { HistoryPanel } from './components/HistoryPanel';
 import { isAuthenticated, logout, hasProfile } from './services/authService';
 
-export type Page = 'dashboard' | 'customerAvatar' | 'masterPrompt' | 'profile' | 'blogSmith';
+export type Page = 'dashboard' | 'customerAvatar' | 'masterPrompt' | 'profile' | 'blogSmith' | 'contentResearch' | 'n8nTest';
 
 const App: React.FC = () => {
   const [currentPage, setCurrentPage] = useState<Page>('dashboard');
@@ -62,6 +64,10 @@ const App: React.FC = () => {
         return <ProfilePage onNavigateBack={() => navigateTo('dashboard')} />;
       case 'blogSmith':
         return <BlogSmithApp onNavigateBack={() => navigateTo('dashboard')} />;
+      case 'contentResearch':
+        return <ContentResearchApp onNavigateBack={() => navigateTo('dashboard')} />;
+      case 'n8nTest':
+        return <N8nTestApp onNavigateBack={() => navigateTo('dashboard')} />;
 
       case 'dashboard':
       default:
@@ -70,6 +76,8 @@ const App: React.FC = () => {
           onNavigateToMasterPrompt={() => navigateTo('masterPrompt')}
           onNavigateToProfile={() => navigateTo('profile')}
           onNavigateToBlogSmith={() => navigateTo('blogSmith')}
+          onNavigateToContentResearch={() => navigateTo('contentResearch')}
+          onNavigateToN8nTest={() => navigateTo('n8nTest')}
           onLogout={handleLogout}
         />;
     }

@@ -1,3 +1,4 @@
+/// <reference types="vite/client" />
 import emailjs from '@emailjs/browser';
 
 // Simulated Auth Service with Real EmailJS
