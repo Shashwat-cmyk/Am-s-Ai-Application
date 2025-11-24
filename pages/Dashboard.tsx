@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Header } from '../components/Header';
 
@@ -6,11 +5,11 @@ interface DashboardProps {
   onNavigateToAvatar: () => void;
   onNavigateToMasterPrompt: () => void;
   onNavigateToProfile: () => void;
-  onNavigateToSEOBlog: () => void;
+  onNavigateToBlogSmith: () => void;
   onLogout: () => void;
 }
 
-export const Dashboard: React.FC<DashboardProps> = ({ onNavigateToAvatar, onNavigateToMasterPrompt, onNavigateToProfile, onNavigateToSEOBlog, onLogout }) => {
+export const Dashboard: React.FC<DashboardProps> = ({ onNavigateToAvatar, onNavigateToMasterPrompt, onNavigateToProfile, onNavigateToBlogSmith, onLogout }) => {
   return (
     <>
       <div className="bg-gray-800 p-6 shadow-md">
@@ -50,21 +49,22 @@ export const Dashboard: React.FC<DashboardProps> = ({ onNavigateToAvatar, onNavi
             </button>
           </div>
 
-          {/* SEO Blog Writer Card */}
-          <div className="bg-gray-800 rounded-lg shadow-lg p-6 flex flex-col justify-between hover:ring-2 hover:ring-purple-500 transition-all duration-300 transform hover:-translate-y-1">
+          {/* BlogSmith AI Card */}
+          <div className="bg-gray-800 rounded-lg shadow-lg p-6 flex flex-col justify-between hover:ring-2 hover:ring-cyan-500 transition-all duration-300 transform hover:-translate-y-1">
             <div>
-              <h2 className="text-xl font-bold text-purple-400 mb-2">AI-Powered SEO Blog Writer</h2>
+              <h2 className="text-xl font-bold text-cyan-400 mb-2">BlogSmith AI</h2>
               <p className="text-gray-400 text-sm mb-6 h-20">
-                Generate SEO-optimized blog content tailored to your client's business and products.
+                Craft unique, SEO-optimized blog posts with AI. Features deep research, brand voice matching, and WordPress publishing.
               </p>
             </div>
             <button
-              onClick={onNavigateToSEOBlog}
-              className="w-full bg-purple-600 text-white font-bold py-2 px-4 rounded-md hover:bg-purple-700 focus:outline-none focus:ring-4 focus:ring-purple-500 focus:ring-opacity-50 transition-all"
+              onClick={onNavigateToBlogSmith}
+              className="w-full bg-cyan-600 text-white font-bold py-2 px-4 rounded-md hover:bg-cyan-700 focus:outline-none focus:ring-4 focus:ring-cyan-500 focus:ring-opacity-50 transition-all"
             >
               Launch App
             </button>
           </div>
+
         </div>
       </main>
     </>

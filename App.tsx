@@ -5,14 +5,16 @@ import { MasterPromptApp } from './pages/MasterPromptApp';
 import { LoginPage } from './pages/LoginPage';
 import { ProfileSetupPage } from './pages/ProfileSetupPage';
 import { ProfilePage } from './pages/ProfilePage';
-import { SEOBlogWriterApp } from './pages/SEOBlogWriterApp';
+import { BlogSmithApp } from './pages/BlogSmithApp';
+
+
 import { Footer } from './components/Footer';
 import { Chatbot } from './components/Chatbot';
 import { Sidebar } from './components/Sidebar';
 import { HistoryPanel } from './components/HistoryPanel';
 import { isAuthenticated, logout, hasProfile } from './services/authService';
 
-export type Page = 'dashboard' | 'customerAvatar' | 'masterPrompt' | 'profile' | 'seoBlog';
+export type Page = 'dashboard' | 'customerAvatar' | 'masterPrompt' | 'profile' | 'blogSmith';
 
 const App: React.FC = () => {
   const [currentPage, setCurrentPage] = useState<Page>('dashboard');
@@ -58,15 +60,16 @@ const App: React.FC = () => {
         return <MasterPromptApp onNavigateBack={() => navigateTo('dashboard')} />;
       case 'profile':
         return <ProfilePage onNavigateBack={() => navigateTo('dashboard')} />;
-      case 'seoBlog':
-        return <SEOBlogWriterApp onNavigateBack={() => navigateTo('dashboard')} />;
+      case 'blogSmith':
+        return <BlogSmithApp onNavigateBack={() => navigateTo('dashboard')} />;
+
       case 'dashboard':
       default:
         return <Dashboard
           onNavigateToAvatar={() => navigateTo('customerAvatar')}
           onNavigateToMasterPrompt={() => navigateTo('masterPrompt')}
           onNavigateToProfile={() => navigateTo('profile')}
-          onNavigateToSEOBlog={() => navigateTo('seoBlog')}
+          onNavigateToBlogSmith={() => navigateTo('blogSmith')}
           onLogout={handleLogout}
         />;
     }
@@ -83,6 +86,7 @@ const App: React.FC = () => {
 
       {/* Main Content */}
       <div className="flex-1 flex flex-col">
+
         <div className="flex-grow">
           {renderPage()}
         </div>
